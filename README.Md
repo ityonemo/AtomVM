@@ -63,3 +63,20 @@ This project is a work in progress, so there are several known limitations, that
 * Binaries are still poorly supported.
 
 All of these limitations are going to be fixed in a reasonable amount of time.
+
+Compiling with Zig
+==================
+
+I'm attempting to be able to build this using Zig, which will let us maybe run
+AtomVM on WASM.
+
+steps:
+```
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ cd ..
+$ zig build
+$ zig-cache/bin/AtomVMzig build/examples/erlang/hello_world.avm
+```
