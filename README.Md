@@ -70,6 +70,11 @@ Compiling with Zig
 I'm attempting to be able to build this using Zig, which will let us maybe run
 AtomVM on WASM.
 
+obtain zig from here:
+https://ziglang.org/download/
+
+Currently tested on zig 0.7.0 pegged version
+
 steps:
 ```
 $ mkdir build
@@ -77,6 +82,8 @@ $ cd build
 $ cmake ..
 $ make
 $ cd ..
-$ zig build
+$ zig build -Drelease-fast=true
 $ zig-cache/bin/AtomVMzig build/examples/erlang/hello_world.avm
+Hello World
+Return value: ok
 ```
