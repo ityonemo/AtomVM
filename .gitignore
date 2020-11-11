@@ -9,3 +9,5 @@ src/platforms/esp32/components/**
 !src/platforms/esp32/components/libatomvm/
 .idea/**
 .vscode/**
+zig-cache/**
+AtomVMzig.wasm

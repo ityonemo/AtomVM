@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AtomVM in WASM</title>
+</head>
+
+<body>
+    <script>
+        fetch('AtomVMzig.wasm')
+            .then(response => response.arrayBuffer())
+            .then(bytes => WebAssembly.instantiate(bytes, {env: {
+            }}))
+            .then(result => {
+                console.log("foo")
+            })
+            .catch(error => console.log(error))
+    </script>
+
+</body>
+
+</html>
