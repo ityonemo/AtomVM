@@ -31,29 +31,30 @@ pub fn build(b: *Builder) void {
         "src/libAtomVM/bitstring.c",
         "src/libAtomVM/atom.c",
         "src/libAtomVM/timer_wheel.c",
-        //"src/platforms/generic_unix/socket_driver.c",
-        //"src/platforms/generic_unix/network_driver.c",
+        "src/platforms/generic_unix/socket_driver.c",
+        "src/platforms/generic_unix/network_driver.c",
+        "src/platforms/wasm32/sys.c",
         "src/platforms/generic_unix/mapped_file.c",
         "src/platforms/generic_unix/platform_defaultatoms.c",
-        "src/platforms/wasm32/sys.c",
         "src/platforms/generic_unix/gpio_driver.c",
         "src/platforms/generic_unix/platform_nifs.c",
         "src/main.c",
     };
 
     if (for_wasm) {
-        const lib = b.addStaticLibrary("AtomVMzig", "AtomVM.zig");
+        const lib = b.addObject("AtomVMzig", "AtomVM.zig");
 
         lib.defineCMacro("__wasi__");
+        lib.defineCMacro("main=c_main");
         lib.defineCMacro("_WASI_EMULATED_MMAN");
         lib.defineCMacro("_WASI_EMULATED_SIGNAL");
 
         // stolen from wasi-libc/sysroot/include after you run
         // make on the wasi-libc.
         lib.addSystemIncludeDir("src/platforms/wasm32/include");
-
-        // stolen from wasi-libc/libc-top-half/musl/arch/generic.
-        lib.addIncludeDir("src/platforms/wasm32/generic");
+        lib.addSystemIncludeDir("src/platforms/wasm32/musl-include");
+        lib.addSystemIncludeDir("src/platforms/wasm32/include/wasi");
+        lib.addSystemIncludeDir("src/platforms/zig/include");
         lib.addIncludeDir("build/src/libAtomVM/");
         lib.addIncludeDir("src/libAtomVM/");
         lib.setBuildMode(mode);
@@ -71,8 +72,6 @@ pub fn build(b: *Builder) void {
         }
 
         b.default_step.dependOn(&lib.step);
-
-        b.installArtifact(lib);
 
     } else {
 

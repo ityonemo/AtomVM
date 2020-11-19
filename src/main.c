@@ -33,8 +33,12 @@
 #include "utils.h"
 #include "term.h"
 
-static const char *ok_a = "\x2" "ok";
+#ifndef main
+  // allows us to shim main with "c_main, when calling from zig."
+  #define main main
+#endif
 
+static const char *ok_a = "\x2" "ok";
 
 void close_mapped_files(MappedFile **mapped_file, int len)
 {

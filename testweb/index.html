@@ -9,12 +9,40 @@
     <script>
         fetch('AtomVMzig.wasm')
             .then(response => response.arrayBuffer())
-            .then(bytes => WebAssembly.instantiate(bytes, {env: {
-                __stack_chk_fail: (a => null),
-                fprintf: (a => {console.log(a);})
-            }}))
+            .then(bytes => WebAssembly.instantiate(bytes,
+              {env: {
+                  __multi3: (x => {console.log("__multi3");}),
+                  __extenddftf2: (x => {console.log("__extenddftf2");}),
+                  __getf2: (x => {console.log("__getf2");}),
+                  socket: (x => {console.log("socket");}),
+                  bind: (x => {console.log("bind");}),
+                  getsockname: (x => {console.log("getsockname");}),
+                  recvfrom: (x => {console.log("recvfrom");}),
+                  getaddrinfo: (x => {console.log("getaddrinfo");}),
+                  connect: (x => {console.log("connect");}),
+                  freeaddrinfo: (x => {console.log("freeaddrinfo");}),
+                  listen: (x => {console.log("listen");}),
+                  getpeername: (x => {console.log("getpeername");}),
+                  sendto: (x => {console.log("sendto");}),
+                  accept: (x => {console.log("accept");}),
+              },
+               wasi_snapshot_preview1: {
+                   fd_close: (x => {console.log("fd_close");}),
+                   fd_write: (x => {console.log("fd_write");}),
+                   fd_seek: (x => {console.log("fd_seek");}),
+                   fd_fdstat_get: (x => {console.log("fd_fdstat_get");}),
+                   fd_fdstat_set_flags: (x => {console.log("fd_fdstat_set_flags");}),
+                   sock_send: (x => {console.log("sock_send");}),
+                   clock_time_get: (x => {console.log("clock_time_get");}),
+                   fd_prestat_get: (x => {console.log("fd_prestat_get");}),
+                   fd_prestat_dir_name: (x => {console.log("fd_prestat_dir_name");}),
+                   proc_exit: (x => {console.log("proc_exit");}),
+                   path_open: (x => {console.log("path_open");}),
+                   fd_filestat_get: (x => {console.log("fd_filestat_get");}),
+                   fd_pread: (x => {console.log("fd_pread");}),
+               }}))
             .then(result => {
-                console.log("foo")
+                console.log(result)
             })
             .catch(error => console.log(error))
     </script>
